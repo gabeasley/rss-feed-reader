@@ -2,6 +2,7 @@ package com.gab.reader.parser;
 
 import com.gab.reader.model.Feed;
 import com.gab.reader.model.FeedMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;

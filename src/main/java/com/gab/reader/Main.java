@@ -7,7 +7,7 @@ import com.gab.reader.parser.RSSFeedParser;
 public class Main {
     public static void main(String[] args) {
         RSSFeedParser parser = new RSSFeedParser(
-                "https://feeds.npr.org/510312/podcast.xml");
+                "https://rss.nytimes.com/services/xml/rss/nyt/World.xml");
         Feed feed = parser.readFeed();
         System.out.println(feed);
         for (FeedMessage message : feed.getMessages()) {
