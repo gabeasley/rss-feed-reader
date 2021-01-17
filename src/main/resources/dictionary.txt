@@ -1,0 +1,5 @@
+npr,https://feeds.npr.org/500005/podcast.xml,https://feeds.npr.org/1095/podcast.xml
+The New York Times,https://rss.nytimes.com/services/xml/rss/nyt/Education.xml, https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml
+npr, https://feeds.npr.org/510355/podcast.xml
+JRE,
+the new York timEs, https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml,https://rss.nytimes.com/services/xml/rss/nyt/World.xml

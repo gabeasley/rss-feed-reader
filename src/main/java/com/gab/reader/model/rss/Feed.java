@@ -1,4 +1,4 @@
-package com.gab.reader.model;
+package com.gab.reader.model.rss;
 
 import lombok.Data;
 

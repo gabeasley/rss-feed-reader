@@ -1,7 +1,7 @@
 package com.gab.reader.parser;
 
-import com.gab.reader.model.Feed;
-import com.gab.reader.model.FeedMessage;
+import com.gab.reader.model.rss.Feed;
+import com.gab.reader.model.rss.FeedMessage;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.stream.XMLEventReader;
@@ -29,6 +29,9 @@ public class RSSFeedParser {
     final URL url;
 
     public RSSFeedParser(String feedUrl) {
+        if(StringUtils.isEmpty(feedUrl)) {
+
+        }
         try {
             this.url = new URL(feedUrl);
         } catch (MalformedURLException e) {
