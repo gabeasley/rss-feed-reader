@@ -3,3 +3,4 @@ The New York Times,https://rss.nytimes.com/services/xml/rss/nyt/Education.xml, h
 npr, https://feeds.npr.org/510355/podcast.xml
 JRE,
 the new York timEs, https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml,https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+BBC,http://feeds.bbci.co.uk/news/rss.xml

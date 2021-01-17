@@ -14,32 +14,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.gab.reader.constant.Constant.*;
+
 public class RSSFeedParser {
-    static final String TITLE = "title";
-    static final String DESCRIPTION = "description";
-    static final String CHANNEL = "channel";
-    static final String LANGUAGE = "language";
-    static final String COPYRIGHT = "copyright";
-    static final String LINK = "link";
-    static final String AUTHOR = "author";
-    static final String ITEM = "item";
-    static final String PUB_DATE = "pubDate";
-    static final String GUID = "guid";
 
-    final URL url;
-
-    public RSSFeedParser(String feedUrl) {
-        if(StringUtils.isEmpty(feedUrl)) {
-
-        }
-        try {
-            this.url = new URL(feedUrl);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Feed readFeed() {
+    public Feed readFeed(String url) {
         Feed feed = null;
         try {
             boolean isFeedHeader = true;
@@ -56,7 +35,7 @@ public class RSSFeedParser {
             // First create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             // Setup a new eventReader
-            InputStream in = read();
+            InputStream in = read(url);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             // read the XML document
             while (eventReader.hasNext()) {
@@ -118,6 +97,26 @@ public class RSSFeedParser {
         return feed;
     }
 
+    private InputStream read(String feedUrl) {
+        URL url = null;
+        if(StringUtils.isEmpty(feedUrl)) {
+            System.err.println("There is no rss url for this company");
+        } else {
+            try {
+                url = new URL(feedUrl);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            return url.openStream();
+        } catch (IOException e) {
+            System.err.println("There was an issue with this url");
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private String getCharacterData(XMLEvent event, XMLEventReader eventReader)
             throws XMLStreamException {
         String result = "";
@@ -126,13 +125,5 @@ public class RSSFeedParser {
             result = event.asCharacters().getData();
         }
         return result;
-    }
-
-    private InputStream read() {
-        try {
-            return url.openStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
