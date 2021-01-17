@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.gab.reader.constant.Constant.*;
 
 public class RSSFeedParser {
-
     public Feed readFeed(String url) {
         Feed feed = null;
         try {
@@ -85,6 +88,7 @@ public class RSSFeedParser {
                         message.setGuid(guid);
                         message.setLink(link);
                         message.setTitle(title);
+                        message.setPubDate(pubdate);
                         feed.getMessages().add(message);
                         event = eventReader.nextEvent();
                         continue;
@@ -93,6 +97,23 @@ public class RSSFeedParser {
             }
         } catch (XMLStreamException e) {
             throw new RuntimeException(e);
+        }
+        if(StringUtils.isEmpty(feed.getPubDate())) {
+            try {
+                Date closestDate = null;
+                for(FeedMessage feedMessage : feed.getMessages()) {
+                    if(closestDate == null || (new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss zzz", Locale.US)
+                            .parse(feedMessage.getPubDate().replaceAll(",", "")).compareTo(closestDate) > 0)) {
+                        closestDate = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss zzz", Locale.US)
+                                .parse(feedMessage.getPubDate().replaceAll(",", ""));
+                    }
+                }
+                return new Feed(feed.getTitle(), feed.getLink(), feed.getDescription(), feed.getLanguage(),
+                        feed.getCopyright(), closestDate.toString());
+            } catch (ParseException e) {
+                return new Feed(feed.getTitle(), feed.getLink(), feed.getDescription(), feed.getLanguage(),
+                        feed.getCopyright(), "N/A");
+            }
         }
         return feed;
     }

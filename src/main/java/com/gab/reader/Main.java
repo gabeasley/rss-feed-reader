@@ -7,10 +7,12 @@ import com.gab.reader.parser.RSSFeedParser;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
-import static com.gab.reader.constant.Constant.RESOURCE_PATH;
+import static com.gab.reader.constant.Constant.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,23 +21,19 @@ public class Main {
         RSSFeedParser rssFeedParser = new RSSFeedParser();
         getDaySinceLastActive(dictionary, rssFeedParser);
     }
-//        RSSFeedParser parser = new RSSFeedParser(
-//                "https://feeds.npr.org/1095/podcast.xml");
-//        Feed feed = parser.readFeed();
-//        System.out.println(feed);
-//        for (FeedMessage message : feed.getMessages()) {
-//            System.out.println(message);
-//        }
 
     public static void getDaySinceLastActive(Dictionary dictionary, RSSFeedParser parser) {
-        FileWriter fw= null;
-        int dayLastActive = 0;
+        FileWriter fw = null;
+        long dayLastActive = 0;
         try {
             fw = new FileWriter(RESOURCE_PATH + "results.txt");
             for(Map.Entry<String, List<String>> companyList: dictionary.getCompanies().entrySet()) {
                 for(String rssURL : companyList.getValue()) {
                     Feed feed = parser.readFeed(rssURL);
-                    System.out.println("Feed: " + feed.getTitle() + " - days last active: " + feed.getPubDate());
+                    Date pubDate = determineDateFormat(feed.getPubDate());
+                    Date today = new Date();
+                    dayLastActive = ChronoUnit.DAYS.between(pubDate.toInstant(), today.toInstant());
+                    System.out.println("Feed: " + feed.getTitle() + " - days last active: " + dayLastActive);
                 }
                 fw.write("Company: " + companyList.getKey() + " - days last active: " + dayLastActive + "\n");
             }
@@ -44,5 +42,17 @@ public class Main {
             System.err.println("There was an error writing the results");
             e.printStackTrace();
         }
+    }
+
+    public static Date determineDateFormat(String pubDate) {
+        List<String> formatStrings = Arrays.asList(NPR_DATE_FORMAT, NYT_DATEFORMAT);
+        if(pubDate != null) {
+            for (String formatString : formatStrings) {
+                try {
+                    return new SimpleDateFormat(formatString).parse(pubDate.replaceAll(",", ""));
+                } catch (ParseException e) {}
+            }
+        }
+        return null;
     }
 }

@@ -9,6 +9,7 @@ public class FeedMessage {
         public String link;
         public String author;
         public String guid;
+        public String pubDate;
 
         @Override
         public String toString() {

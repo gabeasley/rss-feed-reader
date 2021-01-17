@@ -12,4 +12,6 @@ public class Constant {
     public static final String ITEM = "item";
     public static final String PUB_DATE = "pubDate";
     public static final String GUID = "guid";
+    public static final String NPR_DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
+    public static final String NYT_DATEFORMAT = "EEE dd MMM yyyy HH:mm:ss zzz";
 }
