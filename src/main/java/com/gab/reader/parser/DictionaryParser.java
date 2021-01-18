@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.gab.reader.constant.Constant.RESOURCE_PATH;
-
 public class DictionaryParser {
-    public Dictionary createDictionary() {
+    public Dictionary createDictionary(String dictionaryResource) {
         Dictionary companyDictionary = new Dictionary();
         try {
-            File dictionaryFile = new File(RESOURCE_PATH + "dictionary.txt");
+            File dictionaryFile = new File(dictionaryResource + "dictionary.txt");
             Scanner myReader = new Scanner(dictionaryFile);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

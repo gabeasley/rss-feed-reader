@@ -2,6 +2,7 @@ package com.gab.reader.constant;
 
 public class Constant {
     public static final String RESOURCE_PATH = "src/main/resources/";
+    public static final String TEST_RESOURCE_PATH = "src/test/resources/";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String CHANNEL = "channel";

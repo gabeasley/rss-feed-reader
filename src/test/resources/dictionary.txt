@@ -1,0 +1,4 @@
+the new York timEs, https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml,https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+Dateline,
+JRE,
+BBC,http://feeds.bbci.co.uk/news/rss.xml

@@ -17,7 +17,7 @@ import static com.gab.reader.constant.Constant.*;
 public class Main {
     public static void main(String[] args) {
         DictionaryParser dictionaryParser = new DictionaryParser();
-        Dictionary dictionary = dictionaryParser.createDictionary();
+        Dictionary dictionary = dictionaryParser.createDictionary(RESOURCE_PATH);
         RSSFeedParser rssFeedParser = new RSSFeedParser();
         getDaySinceLastActive(dictionary, rssFeedParser);
     }
